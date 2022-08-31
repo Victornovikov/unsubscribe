@@ -47,8 +47,6 @@ async function parseMessageById(gmail, messageId) {
   return {messageId, subject, body}
 }
 
-
-
 async function test () {
   const gmail = await client()
   // const res = await fetchMessages(gmail, 'me', 10, ['INBOX'], 'from:me', 'id,threadId', '1')
@@ -58,33 +56,14 @@ async function test () {
   // https://stackoverflow.com/questions/24811008/gmail-api-decoding-messages-in-javascript
   // https://stackoverflow.com/questions/37445865/where-to-find-body-of-email-depending-of-mimetype
   const bodyData = message.data.payload.parts[0].body.data 
-  // const bodyData = message.payload.body.data
   const decoded = base64.decode(bodyData.replace(/-/g, '+').replace(/_/g, '/'))
-
-  // console.log('message', JSON.stringify(message.data.payload.parts[0].body.data, null, 2))
   console.log('decoded', decoded)
 }
 
 async function getMessageList() {
   const gmail = await client()
   const messageIds = await fetchMessages(gmail, 'me', 20, 'INBOX', '', 'id', '')
-  // let subject = await getSubject(gmail, messageIds.messages[0].id)
-  // let body = await getBody(gmail, messageIds.messages[0].id)
-  // messageIds.messages.map(async message => {
-  //   const subject = await getSubject(gmail, message.id)
-  //   const messageId = message.id
-  //   const body = await getBody(gmail, message.id)
-  //   // const body = await getBody(gmail, message.id)
-
-  //   console.log('subject', subject)
-  // })
   const messageList = messageIds.messages.reduce(async (acc, message) => {
-    // const parsedMessage = {
-    //   'id': message.id,
-    //   // 'subject': message.data.payload.headers.find(h => h.name === 'Subject').value,
-    //   'subject': await getSubject(gmail, message.id),
-    //   'body': getBody(message)
-    // }
     const parsedMessage = await parseMessageById(gmail, message.id)
     return [...await acc, parsedMessage]
   } ,[])
