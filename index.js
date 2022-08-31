@@ -6,10 +6,8 @@ const {google} = require('googleapis')
 
 // If modifying these scopes, delete token.json.
 const SCOPES = [
-  'https://mail.google.com/',
-  'https://www.googleapis.com/auth/gmail.metadata',
-  'https://www.googleapis.com/auth/gmail.modify',
-  'https://www.googleapis.com/auth/gmail.readonly',
+  // 'https://mail.google.com/',
+  'https://www.googleapis.com/auth/gmail.readonly'
 ]
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
