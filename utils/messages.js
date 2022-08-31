@@ -73,10 +73,10 @@ async function getMessageList() {
 
 async function main() {
   const messageList = await getMessageList()
-  console.log(messageList)
+  console.log('messageList', messageList)
 }
 
-main() 
+// main() 
 
 module.exports = { fetchMessages, parseMessageById, getBody, getMessageList }
   

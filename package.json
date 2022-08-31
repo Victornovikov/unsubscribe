@@ -4,7 +4,11 @@
   "description": "Scanning your mail for junk and letting you to unsubscribe easily",
   "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": "NODE_ENV=production node index.js",
+    "dev": "NODE_ENV=development nodemon index.js",
+    "lint": "eslint .",
+    "test": "NODE_ENV=test jest --verbose --runInBand",
+    "clear_jest": "jest --clearCache"
   },
   "repository": {
     "type": "git",
