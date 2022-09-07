@@ -4,7 +4,7 @@
   "description": "Scanning your mail for junk and letting you to unsubscribe easily",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=production node index.js",
+    "start": "NODE_ENV=production PORT=3001 node index.js",
     "dev": "NODE_ENV=development nodemon index.js",
     "lint": "eslint .",
     "test": "NODE_ENV=test jest --verbose --runInBand",
