@@ -4,6 +4,7 @@ const app = express()
 const cors = require('cors')
 const bodyParser = require('body-parser')
 const logger = require('./utils/logger')
+const morgan = require('morgan')
 const messagesRouter = require('./controllers/messages')
 const MONGODB_URI = require('./utils/config').MONGODB_URI
 const middleware = require('./utils/middleware')
@@ -12,6 +13,7 @@ const mongoose = require('mongoose')
 
 app.use(cors())
 app.use(express.json())
+app.use(morgan('tiny'))
 app.use(middleware.requestLogger)
 app.use('/api/messages', messagesRouter)
 

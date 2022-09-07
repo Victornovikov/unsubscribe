@@ -67,7 +67,7 @@ async function getMessageList() {
     const parsedMessage = await parseMessageById(gmail, message.id)
     return [...await acc, parsedMessage]
   } ,[])
-  console.log('messageList', JSON.stringify(messageList))
+  console.log('messageList', messageList)
   return messageList
 }
 
