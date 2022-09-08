@@ -9,6 +9,27 @@ const client = async () => {
   return gmail
 }
 
+const getLinks = (body) => {
+  const links = []
+  const unsubscribeLinks = []
+  const regex_url = /(http|https):\/\/[a-zA-Z0-9./?&=_%:-]*/g
+  const regex_unsubscribe = /(unsubscribe|sendgrid)/g
+  try {
+    let m = body.match(regex_url)
+    if (m) {
+      m.forEach((link) => {
+        const unsubscribeLink = link.match(regex_unsubscribe) ? true : false
+        links.push({ link, unsubscribeLink })
+        if (unsubscribeLink) unsubscribeLinks.push(link)
+      })
+    }
+  } catch (error) {
+    console.log('error: ', error)
+  }
+  return { links, unsubscribeLinks }
+}
+
+
 // Do the magic
 async function fetchMessages(gmail, userId, maxResults, labelIds, q, fields, pageToken) {
   const res = await gmail.users.messages.list({
@@ -43,8 +64,11 @@ function getBody (message) {
 async function parseMessageById(gmail, messageId) {
   const message = await gmail.users.messages.get({id: messageId, userId: 'me', format: 'full'})
   const subject = message.data.payload.headers.find(h => h.name === 'Subject').value
+  const from = message.data.payload.headers.find(h => h.name === 'From').value
+  const unsubscribeHeader = message.data.payload.headers.find(h => h.name === 'List-Unsubscribe')
   const body = getBody(message)
-  return {messageId, subject, body}
+  const links = getLinks(body)
+  return {messageId, from, subject, body, links, unsubscribeHeader}
 }
 
 async function test () {
@@ -63,11 +87,11 @@ async function test () {
 async function getMessageList() {
   const gmail = await client()
   const messageIds = await fetchMessages(gmail, 'me', 20, 'INBOX', '', 'id', '')
-  const messageList = messageIds.messages.reduce(async (acc, message) => {
+  const messageList = await messageIds.messages.reduce(async (acc, message) => {
     const parsedMessage = await parseMessageById(gmail, message.id)
     return [...await acc, parsedMessage]
   } ,[])
-  console.log('messageList', messageList)
+  // console.log('messageList', messageList)
   return messageList
 }
 
