@@ -13,7 +13,7 @@ const getLinks = (body) => {
   const links = []
   const unsubscribeLinks = []
   const regex_url = /(http|https):\/\/[a-zA-Z0-9./?&=_%:-]*/g
-  const regex_unsubscribe = /(unsubscribe|sendgrid)/g
+  const regex_unsubscribe = /(unsubscribe)/g
   try {
     let m = body.match(regex_url)
     if (m) {
@@ -86,7 +86,7 @@ async function test () {
 
 async function getMessageList() {
   const gmail = await client()
-  const messageIds = await fetchMessages(gmail, 'me', 20, 'INBOX', '', 'id', '')
+  const messageIds = await fetchMessages(gmail, 'me', 100, 'INBOX', '', 'id', '')
   const messageList = await messageIds.messages.reduce(async (acc, message) => {
     const parsedMessage = await parseMessageById(gmail, message.id)
     return [...await acc, parsedMessage]

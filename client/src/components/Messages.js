@@ -29,13 +29,14 @@ const Messages = ({ messages }) => {
               <Typography> {message.from} {message.subject} { hasUnsubscribeLink && "⭐️"} { hasUnsubscribeHeader && "✨" }</Typography>
             </AccordionSummary>
             <AccordionDetails>
-              <Typography>
+            {/* https://stackoverflow.com/questions/41928567/div-cannot-appear-as-a-descendant-of-p> */}
+              <Typography component={'span'}>
                 {/* {message.body} */}
-                { hasUnsubscribeHeader && <div>Unsubscribe header: {message.unsubscribeHeader.value}</div> }
+                { hasUnsubscribeHeader && <p> Unsubscribe header: {message.unsubscribeHeader.value}</p> }
                 { hasUnsubscribeLink && message.links.unsubscribeLinks.map((link) => <a href={link} target="_blank">Unsubscribe</a>)}
                 {/* { !hasUnsubscribeLink && message.links.links.map((link) => <a href={link} target="_blank"> {link} </a>)} */}
 
-                { !hasUnsubscribeLink && !hasUnsubscribeHeader && <div>{message.links.links.map((link) =>  <a href={link.link} target="_blank"> {link.link} </a> )}</div>} 
+                { !hasUnsubscribeLink && !hasUnsubscribeHeader && <p>{message.links.links.map((link) =>  <a href={link.link} target="_blank"> {link.link} </a> )}</p>} 
               </Typography>
             </AccordionDetails>
           </Accordion>
