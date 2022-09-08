@@ -26,7 +26,9 @@ const Messages = ({ messages }) => {
               aria-controls="panel1a-content"
               id="panel1a-header"
             >
-              <Typography> {message.from} {message.subject} { hasUnsubscribeLink && "⭐️"} { hasUnsubscribeHeader && "✨" }</Typography>
+              <Typography> 
+                {message.from} {message.subject} 
+                { hasUnsubscribeLink &&  message.links.unsubscribeLinks.map((link) => <a href={link} target="_blank">⭐️</a>)} { hasUnsubscribeHeader && "✨" }</Typography>
             </AccordionSummary>
             <AccordionDetails>
             {/* https://stackoverflow.com/questions/41928567/div-cannot-appear-as-a-descendant-of-p> */}

@@ -86,7 +86,7 @@ async function test () {
 
 async function getMessageList() {
   const gmail = await client()
-  const messageIds = await fetchMessages(gmail, 'me', 100, 'INBOX', '', 'id', '')
+  const messageIds = await fetchMessages(gmail, 'me', 20, 'INBOX', '', 'id', '')
   const messageList = await messageIds.messages.reduce(async (acc, message) => {
     const parsedMessage = await parseMessageById(gmail, message.id)
     return [...await acc, parsedMessage]
