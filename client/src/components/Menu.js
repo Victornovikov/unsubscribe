@@ -12,8 +12,9 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import Link from '@mui/material/Link';
 
-const pages = ['Products', 'Pricing', 'Blog'];
+const pages = [{'name':'Messages', 'link':'/messages'}, {'name':'Stats', 'link':'/stats'} ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 const ResponsiveAppBar = () => {
@@ -88,8 +89,9 @@ const ResponsiveAppBar = () => {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page}</Typography>
+                <MenuItem key={page.name} onClick={handleCloseNavMenu}>
+                    {/* <Link href={page.link}>{page.name}</Link> */}
+                    <Typography textAlign="center">{page.name}</Typography>
                 </MenuItem>
               ))}
             </Menu>
